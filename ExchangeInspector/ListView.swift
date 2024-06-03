@@ -7,25 +7,9 @@
 
 import UIKit
 
-struct ExchangeRate {
-	let currencyCode: String
-	let currencyName: String
-	let rate: Double
-	let change: Double
-	let changePercentage: Double
-}
-
 class ListView: UIViewController {
-	
-	var exchangeRates: [ExchangeRate] = [
-		ExchangeRate(currencyCode: "USD", currencyName: "미국", rate: 1378.50, change: 7.50, changePercentage: 0.55),
-		ExchangeRate(currencyCode: "JPY", currencyName: "일본", rate: 878.39, change: -0.92, changePercentage: -1.04),
-		ExchangeRate(currencyCode: "EUR", currencyName: "유럽연합", rate: 1489.47, change: -8.72, changePercentage: -0.59),
-		ExchangeRate(currencyCode: "CNY", currencyName: "중국", rate: 189.82, change: 1.34, changePercentage: 0.71),
-		ExchangeRate(currencyCode: "GBP", currencyName: "영국", rate: 1750.70, change: -9.46, changePercentage: -0.54),
-		ExchangeRate(currencyCode: "AUD", currencyName: "호주", rate: 910.84, change: -4.47, changePercentage: -0.49),
-		ExchangeRate(currencyCode: "HKD", currencyName: "홍콩", rate: 176.11, change: -1.01, changePercentage: -0.57)
-	]
+	var exchangeRates: [ExchangeRate] = []
+	let exchangeRateService = ExchangeRateService()
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -53,7 +37,44 @@ class ListView: UIViewController {
 			exchangeRateView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
 		])
 		
-		// 리스트구현
+		guard let authKey = loadAPIKey() else {
+			print("API Key not found")
+			return
+		}
+		
+		let searchDate = "20230601" // 예시 날짜
+		let data = "AP01"
+		
+		fetchExchangeRates(authKey: authKey, searchDate: searchDate, data: data) { [weak self] rates in
+			self?.exchangeRates = rates ?? []
+			DispatchQueue.main.async {
+				self?.updateExchangeRateView(exchangeRateView)
+			}
+		}
+	}
+	
+	func loadAPIKey() -> String? {
+		guard let filePath = Bundle.main.path(forResource: "API_KEY", ofType: "plist") else {
+			fatalError("Couldn't find file 'API_KEY.plist'.")
+		}
+		
+		let plist = NSDictionary(contentsOfFile: filePath)
+		guard let apiKey = plist?.object(forKey: "API_KEY") as? String else {
+			fatalError("Couldn't find key 'API_KEY' in 'API_KEY.plist'.")
+		}
+		
+		return apiKey
+	}
+	
+	func fetchExchangeRates(authKey: String, searchDate: String, data: String, completion: @escaping ([ExchangeRate]) -> Void) {
+		exchangeRateService.fetchExchangeRates(authKey: authKey, searchDate: searchDate, data: data) { rates in
+			completion(rates ?? [])
+		}
+	}
+	
+	func updateExchangeRateView(_ exchangeRateView: UIStackView) {
+		exchangeRateView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+		
 		for rate in exchangeRates {
 			let button = UIButton(type: .system)
 			button.layer.borderWidth = 1
@@ -72,26 +93,25 @@ class ListView: UIViewController {
 				.font: UIFont.systemFont(ofSize: 16, weight: .semibold),
 				.foregroundColor: UIColor.label
 			]
-			let currencyName = NSAttributedString(string: "\(rate.currencyName) \(rate.currencyCode)\n", attributes: currencyNameAttributes)
+			let currencyName = NSAttributedString(string: "\(rate.currencyName ?? "Unknown") \(rate.currencyCode ?? "N/A")\n", attributes: currencyNameAttributes)
 			attributedTitle.append(currencyName)
 			
 			let rateValueAttributes: [NSAttributedString.Key: Any] = [
 				.font: UIFont.monospacedDigitSystemFont(ofSize: 20, weight: .regular),
 				.foregroundColor: UIColor.label
 			]
-			let rateValue = NSAttributedString(string: rate.rate.formatted(.currency(code: rate.currencyCode)), attributes: rateValueAttributes)
+			let rateValue = NSAttributedString(string: "\(rate.rate ?? "N/A") 원", attributes: rateValueAttributes)
 			attributedTitle.append(rateValue)
 			
-			// 환율 변동 설정
-			let changeSign = rate.change >= 0 ? "▲" : "▼"
-			let changeColor = rate.change >= 0 ? UIColor.systemRed : UIColor.systemBlue
-			let changePercentageString = abs(rate.changePercentage).formatted(.percent.precision(.fractionLength(2)))
+			let changeSign = rate.change?.starts(with: "-") ?? false ? "▼" : "▲"
+			let changeColor = rate.change?.starts(with: "-") ?? false ? UIColor.systemBlue : UIColor.systemRed
+			let changePercentageString = "\(rate.changePercentage ?? "N/A")%"
 			
 			let changeValueAttributes: [NSAttributedString.Key: Any] = [
 				.font: UIFont.systemFont(ofSize: 14, weight: .regular),
 				.foregroundColor: changeColor
 			]
-			let changeValue = NSAttributedString(string: "\n\(changeSign)\(abs(rate.change).formatted(.number.precision(.fractionLength(2)))) \(changePercentageString)", attributes: changeValueAttributes)
+			let changeValue = NSAttributedString(string: "\n\(changeSign) \(rate.change ?? "N/A") \(changePercentageString)", attributes: changeValueAttributes)
 			attributedTitle.append(changeValue)
 			
 			button.setAttributedTitle(attributedTitle, for: .normal)
@@ -102,11 +122,10 @@ class ListView: UIViewController {
 		}
 	}
 	
-	// 환율리스트 버튼 동작
 	@objc func buttonTapped(_ sender: UIButton) {
 		let sheetViewController = UIViewController()
 		sheetViewController.view.backgroundColor = .systemBackground
-		sheetViewController.title = "시트 제목"
+		sheetViewController.title = "환율 정보"
 		
 		if let sheetController = sheetViewController.sheetPresentationController {
 			sheetController.detents = [.large()]
