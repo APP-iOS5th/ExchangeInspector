@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BF41262F2C0D9AA000E228C9 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF41262E2C0D9AA000E228C9 /* ListView.swift */; };
 		EBC48D562C0D8770001820AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC48D552C0D8770001820AD /* AppDelegate.swift */; };
 		EBC48D582C0D8770001820AD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC48D572C0D8770001820AD /* SceneDelegate.swift */; };
 		EBC48D5A2C0D8770001820AD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC48D592C0D8770001820AD /* ViewController.swift */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BF41262E2C0D9AA000E228C9 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		EBC48D522C0D8770001820AD /* ExchangeInspector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExchangeInspector.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBC48D552C0D8770001820AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EBC48D572C0D8770001820AD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -56,6 +58,7 @@
 			children = (
 				EBC48D552C0D8770001820AD /* AppDelegate.swift */,
 				EBC48D572C0D8770001820AD /* SceneDelegate.swift */,
+				BF41262E2C0D9AA000E228C9 /* ListView.swift */,
 				EBC48D592C0D8770001820AD /* ViewController.swift */,
 				EBC48D5E2C0D8771001820AD /* Assets.xcassets */,
 				EBC48D602C0D8771001820AD /* LaunchScreen.storyboard */,
@@ -134,6 +137,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF41262F2C0D9AA000E228C9 /* ListView.swift in Sources */,
 				EBC48D5A2C0D8770001820AD /* ViewController.swift in Sources */,
 				EBC48D562C0D8770001820AD /* AppDelegate.swift in Sources */,
 				EBC48D582C0D8770001820AD /* SceneDelegate.swift in Sources */,

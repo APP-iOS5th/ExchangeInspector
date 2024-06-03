@@ -26,7 +26,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let tabBarController = UITabBarController()
         
         // 첫번째 탭(환율 리스트)
-        let firstViewController = UIViewController()
+        let firstViewController = ListView()
         firstViewController.view.backgroundColor = .white
         firstViewController.tabBarItem = UITabBarItem(title: "환율 리스트", image: UIImage(systemName: "arrow.up.right"), tag: 0)
         
