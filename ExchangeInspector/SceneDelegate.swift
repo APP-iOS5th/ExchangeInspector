@@ -36,7 +36,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         secondViewController.tabBarItem = UITabBarItem(title: "환율 계산기", image: UIImage(systemName: "arrow.left.arrow.right"), tag: 1)
         
         // 세번째 탭(뉴스)
-        let thirdViewController = UIViewController()
+        let thirdViewController = NewsListViewController()
         thirdViewController.view.backgroundColor = .white
         thirdViewController.tabBarItem = UITabBarItem(title: "뉴스", image: UIImage(systemName: "newspaper"), tag: 2)
         
