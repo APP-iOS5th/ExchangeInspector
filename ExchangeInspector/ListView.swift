@@ -10,6 +10,7 @@ import UIKit
 class ListView: UIViewController {
 	var exchangeRates: [ExchangeRate] = []
 	let exchangeRateService = ExchangeRateService()
+	let preferredCurrencies = ["USD", "CNH", "GBP", "EUR", "HKD"]
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -42,17 +43,18 @@ class ListView: UIViewController {
 			return
 		}
 		
-		let searchDate = "20230601" // 예시 날짜
+		let searchDate = getCurrentKoreanDate()
 		let data = "AP01"
 		
 		fetchExchangeRates(authKey: authKey, searchDate: searchDate, data: data) { [weak self] rates in
-			self?.exchangeRates = rates ?? []
+			self?.exchangeRates = rates
 			DispatchQueue.main.async {
 				self?.updateExchangeRateView(exchangeRateView)
 			}
 		}
 	}
 	
+	// api키 로드
 	func loadAPIKey() -> String? {
 		guard let filePath = Bundle.main.path(forResource: "API_KEY", ofType: "plist") else {
 			fatalError("Couldn't find file 'API_KEY.plist'.")
@@ -68,10 +70,24 @@ class ListView: UIViewController {
 	
 	func fetchExchangeRates(authKey: String, searchDate: String, data: String, completion: @escaping ([ExchangeRate]) -> Void) {
 		exchangeRateService.fetchExchangeRates(authKey: authKey, searchDate: searchDate, data: data) { rates in
-			completion(rates ?? [])
+			let filteredRates = self.filterPreferredCurrencies(rates: rates ?? [])
+			completion(filteredRates)
 		}
 	}
 	
+	// preferredCurrencies에 지정된 통화들
+	func filterPreferredCurrencies(rates: [ExchangeRate]) -> [ExchangeRate] {
+		let filteredRates = rates.filter { preferredCurrencies.contains($0.currencyCode!) }
+		return filteredRates.sorted { (rate1, rate2) -> Bool in
+			guard let index1 = preferredCurrencies.firstIndex(of: rate1.currencyCode!),
+				  let index2 = preferredCurrencies.firstIndex(of: rate2.currencyCode!) else {
+				return false
+			}
+			return index1 < index2
+		}
+	}
+	
+	// 리스트 생성
 	func updateExchangeRateView(_ exchangeRateView: UIStackView) {
 		exchangeRateView.arrangedSubviews.forEach { $0.removeFromSuperview() }
 		
@@ -122,6 +138,7 @@ class ListView: UIViewController {
 		}
 	}
 	
+	// 환율 버튼을 클릭시 시트 업
 	@objc func buttonTapped(_ sender: UIButton) {
 		let sheetViewController = UIViewController()
 		sheetViewController.view.backgroundColor = .systemBackground
@@ -133,5 +150,14 @@ class ListView: UIViewController {
 		}
 		
 		present(sheetViewController, animated: true)
+	}
+	
+	// 현재시간
+	func getCurrentKoreanDate() -> String {
+		let koreanTimeZone = TimeZone(identifier: "Asia/Seoul")!
+		let dateFormatter = DateFormatter()
+		dateFormatter.timeZone = koreanTimeZone
+		dateFormatter.dateFormat = "yyyyMMdd"
+		return dateFormatter.string(from: Date())
 	}
 }
