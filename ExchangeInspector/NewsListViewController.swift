@@ -24,7 +24,7 @@ class NewsListViewController: UIViewController, UITableViewDataSource, UITableVi
         tableView.frame = view.bounds
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "newsCell")
+        tableView.register(NewsCustomTableViewCell.self, forCellReuseIdentifier: "newsCell")
     }
     
     private func fetchNews() {
@@ -42,8 +42,11 @@ class NewsListViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "newsCell", for: indexPath)
-        cell.textLabel?.text = news[indexPath.row].title
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "newsCell", for: indexPath) as? NewsCustomTableViewCell else {
+            return UITableViewCell()
+        }
+        let newsItem = news[indexPath.row]
+        cell.configure(with: newsItem)
         return cell
     }
     // TODO: - 뉴스 디테일 뷰
