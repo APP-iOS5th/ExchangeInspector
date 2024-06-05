@@ -8,14 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		BF41262F2C0D9AA000E228C9 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF41262E2C0D9AA000E228C9 /* ListView.swift */; };
-		BFFCBC682C0E2BA70051C4CD /* ExchangeRateAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFCBC672C0E2BA70051C4CD /* ExchangeRateAPI.swift */; };
-		BFFCBC6B2C0E2BB90051C4CD /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = BFFCBC6A2C0E2BB90051C4CD /* CombineMoya */; };
-		BFFCBC6D2C0E2BB90051C4CD /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = BFFCBC6C2C0E2BB90051C4CD /* Moya */; };
-		BFFCBC6F2C0E2BB90051C4CD /* ReactiveMoya in Frameworks */ = {isa = PBXBuildFile; productRef = BFFCBC6E2C0E2BB90051C4CD /* ReactiveMoya */; };
-		BFFCBC712C0E2BB90051C4CD /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = BFFCBC702C0E2BB90051C4CD /* RxMoya */; };
-		BFFCBC732C0E2BCB0051C4CD /* ExchangeRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFCBC722C0E2BCB0051C4CD /* ExchangeRate.swift */; };
-		BFFCBC752C0E2BE20051C4CD /* ExchangeRateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFCBC742C0E2BE20051C4CD /* ExchangeRateService.swift */; };
-		BFFCBC782C0E2CCC0051C4CD /* API_KEY.plist in Resources */ = {isa = PBXBuildFile; fileRef = BFFCBC772C0E2CCC0051C4CD /* API_KEY.plist */; };
+		BF8D05A12C10082B00D1A60D /* API_KEY.plist in Resources */ = {isa = PBXBuildFile; fileRef = BF8D05A02C10082B00D1A60D /* API_KEY.plist */; };
 		EBC48D562C0D8770001820AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC48D552C0D8770001820AD /* AppDelegate.swift */; };
 		EBC48D582C0D8770001820AD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC48D572C0D8770001820AD /* SceneDelegate.swift */; };
 		EBC48D5A2C0D8770001820AD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC48D592C0D8770001820AD /* ViewController.swift */; };
@@ -25,10 +18,7 @@
 
 /* Begin PBXFileReference section */
 		BF41262E2C0D9AA000E228C9 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
-		BFFCBC672C0E2BA70051C4CD /* ExchangeRateAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateAPI.swift; sourceTree = "<group>"; };
-		BFFCBC722C0E2BCB0051C4CD /* ExchangeRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRate.swift; sourceTree = "<group>"; };
-		BFFCBC742C0E2BE20051C4CD /* ExchangeRateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateService.swift; sourceTree = "<group>"; };
-		BFFCBC772C0E2CCC0051C4CD /* API_KEY.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = API_KEY.plist; sourceTree = "<group>"; };
+		BF8D05A02C10082B00D1A60D /* API_KEY.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = API_KEY.plist; sourceTree = "<group>"; };
 		EBC48D522C0D8770001820AD /* ExchangeInspector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExchangeInspector.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBC48D552C0D8770001820AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EBC48D572C0D8770001820AD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -43,10 +33,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BFFCBC6D2C0E2BB90051C4CD /* Moya in Frameworks */,
-				BFFCBC6B2C0E2BB90051C4CD /* CombineMoya in Frameworks */,
-				BFFCBC712C0E2BB90051C4CD /* RxMoya in Frameworks */,
-				BFFCBC6F2C0E2BB90051C4CD /* ReactiveMoya in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,14 +61,11 @@
 				EBC48D552C0D8770001820AD /* AppDelegate.swift */,
 				EBC48D572C0D8770001820AD /* SceneDelegate.swift */,
 				BF41262E2C0D9AA000E228C9 /* ListView.swift */,
-				BFFCBC672C0E2BA70051C4CD /* ExchangeRateAPI.swift */,
-				BFFCBC722C0E2BCB0051C4CD /* ExchangeRate.swift */,
-				BFFCBC742C0E2BE20051C4CD /* ExchangeRateService.swift */,
 				EBC48D592C0D8770001820AD /* ViewController.swift */,
 				EBC48D5E2C0D8771001820AD /* Assets.xcassets */,
 				EBC48D602C0D8771001820AD /* LaunchScreen.storyboard */,
-				BFFCBC772C0E2CCC0051C4CD /* API_KEY.plist */,
 				EBC48D632C0D8771001820AD /* Info.plist */,
+				BF8D05A02C10082B00D1A60D /* API_KEY.plist */,
 			);
 			path = ExchangeInspector;
 			sourceTree = "<group>";
@@ -104,10 +87,6 @@
 			);
 			name = ExchangeInspector;
 			packageProductDependencies = (
-				BFFCBC6A2C0E2BB90051C4CD /* CombineMoya */,
-				BFFCBC6C2C0E2BB90051C4CD /* Moya */,
-				BFFCBC6E2C0E2BB90051C4CD /* ReactiveMoya */,
-				BFFCBC702C0E2BB90051C4CD /* RxMoya */,
 			);
 			productName = ExchangeInspector;
 			productReference = EBC48D522C0D8770001820AD /* ExchangeInspector.app */;
@@ -138,7 +117,6 @@
 			);
 			mainGroup = EBC48D492C0D8770001820AD;
 			packageReferences = (
-				BFFCBC692C0E2BB90051C4CD /* XCRemoteSwiftPackageReference "Moya" */,
 			);
 			productRefGroup = EBC48D532C0D8770001820AD /* Products */;
 			projectDirPath = "";
@@ -154,8 +132,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BFFCBC782C0E2CCC0051C4CD /* API_KEY.plist in Resources */,
 				EBC48D5F2C0D8771001820AD /* Assets.xcassets in Resources */,
+				BF8D05A12C10082B00D1A60D /* API_KEY.plist in Resources */,
 				EBC48D622C0D8771001820AD /* Base in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -167,12 +145,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BFFCBC682C0E2BA70051C4CD /* ExchangeRateAPI.swift in Sources */,
 				BF41262F2C0D9AA000E228C9 /* ListView.swift in Sources */,
-				BFFCBC752C0E2BE20051C4CD /* ExchangeRateService.swift in Sources */,
 				EBC48D5A2C0D8770001820AD /* ViewController.swift in Sources */,
 				EBC48D562C0D8770001820AD /* AppDelegate.swift in Sources */,
-				BFFCBC732C0E2BCB0051C4CD /* ExchangeRate.swift in Sources */,
 				EBC48D582C0D8770001820AD /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -384,40 +359,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		BFFCBC692C0E2BB90051C4CD /* XCRemoteSwiftPackageReference "Moya" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Moya/Moya.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 15.0.3;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		BFFCBC6A2C0E2BB90051C4CD /* CombineMoya */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BFFCBC692C0E2BB90051C4CD /* XCRemoteSwiftPackageReference "Moya" */;
-			productName = CombineMoya;
-		};
-		BFFCBC6C2C0E2BB90051C4CD /* Moya */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BFFCBC692C0E2BB90051C4CD /* XCRemoteSwiftPackageReference "Moya" */;
-			productName = Moya;
-		};
-		BFFCBC6E2C0E2BB90051C4CD /* ReactiveMoya */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BFFCBC692C0E2BB90051C4CD /* XCRemoteSwiftPackageReference "Moya" */;
-			productName = ReactiveMoya;
-		};
-		BFFCBC702C0E2BB90051C4CD /* RxMoya */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BFFCBC692C0E2BB90051C4CD /* XCRemoteSwiftPackageReference "Moya" */;
-			productName = RxMoya;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EBC48D4A2C0D8770001820AD /* Project object */;
 }
