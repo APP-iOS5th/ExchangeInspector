@@ -7,18 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BF41262F2C0D9AA000E228C9 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF41262E2C0D9AA000E228C9 /* ListView.swift */; };
-		BF8D05A12C10082B00D1A60D /* API_KEY.plist in Resources */ = {isa = PBXBuildFile; fileRef = BF8D05A02C10082B00D1A60D /* API_KEY.plist */; };
+		EB61BD4A2C0ED92400D5324C /* NewsCustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB61BD492C0ED92400D5324C /* NewsCustomTableViewCell.swift */; };
 		EBC48D562C0D8770001820AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC48D552C0D8770001820AD /* AppDelegate.swift */; };
 		EBC48D582C0D8770001820AD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC48D572C0D8770001820AD /* SceneDelegate.swift */; };
 		EBC48D5A2C0D8770001820AD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC48D592C0D8770001820AD /* ViewController.swift */; };
 		EBC48D5F2C0D8771001820AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBC48D5E2C0D8771001820AD /* Assets.xcassets */; };
 		EBC48D622C0D8771001820AD /* Base in Resources */ = {isa = PBXBuildFile; fileRef = EBC48D612C0D8771001820AD /* Base */; };
+		EBC48D6C2C0D9604001820AD /* NewsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC48D6B2C0D9604001820AD /* NewsListViewController.swift */; };
+		EBC48D6E2C0D9C37001820AD /* NaverNewsApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC48D6D2C0D9C37001820AD /* NaverNewsApi.swift */; };
+		EBC48D702C0DA658001820AD /* NaverClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC48D6F2C0DA658001820AD /* NaverClient.swift */; };
+		EBC48D722C0DB03F001820AD /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC48D712C0DB03F001820AD /* NewsModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		BF41262E2C0D9AA000E228C9 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
-		BF8D05A02C10082B00D1A60D /* API_KEY.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = API_KEY.plist; sourceTree = "<group>"; };
+		EB61BD492C0ED92400D5324C /* NewsCustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCustomTableViewCell.swift; sourceTree = "<group>"; };
 		EBC48D522C0D8770001820AD /* ExchangeInspector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExchangeInspector.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBC48D552C0D8770001820AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EBC48D572C0D8770001820AD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -26,6 +28,10 @@
 		EBC48D5E2C0D8771001820AD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EBC48D612C0D8771001820AD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EBC48D632C0D8771001820AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EBC48D6B2C0D9604001820AD /* NewsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsListViewController.swift; sourceTree = "<group>"; };
+		EBC48D6D2C0D9C37001820AD /* NaverNewsApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaverNewsApi.swift; sourceTree = "<group>"; };
+		EBC48D6F2C0DA658001820AD /* NaverClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaverClient.swift; sourceTree = "<group>"; };
+		EBC48D712C0DB03F001820AD /* NewsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +66,11 @@
 			children = (
 				EBC48D552C0D8770001820AD /* AppDelegate.swift */,
 				EBC48D572C0D8770001820AD /* SceneDelegate.swift */,
-				BF41262E2C0D9AA000E228C9 /* ListView.swift */,
+				EBC48D6B2C0D9604001820AD /* NewsListViewController.swift */,
+				EB61BD492C0ED92400D5324C /* NewsCustomTableViewCell.swift */,
+				EBC48D6D2C0D9C37001820AD /* NaverNewsApi.swift */,
+				EBC48D712C0DB03F001820AD /* NewsModel.swift */,
+				EBC48D6F2C0DA658001820AD /* NaverClient.swift */,
 				EBC48D592C0D8770001820AD /* ViewController.swift */,
 				EBC48D5E2C0D8771001820AD /* Assets.xcassets */,
 				EBC48D602C0D8771001820AD /* LaunchScreen.storyboard */,
@@ -145,10 +155,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF41262F2C0D9AA000E228C9 /* ListView.swift in Sources */,
+				EBC48D722C0DB03F001820AD /* NewsModel.swift in Sources */,
 				EBC48D5A2C0D8770001820AD /* ViewController.swift in Sources */,
+				EBC48D6E2C0D9C37001820AD /* NaverNewsApi.swift in Sources */,
+				EB61BD4A2C0ED92400D5324C /* NewsCustomTableViewCell.swift in Sources */,
 				EBC48D562C0D8770001820AD /* AppDelegate.swift in Sources */,
 				EBC48D582C0D8770001820AD /* SceneDelegate.swift in Sources */,
+				EBC48D6C2C0D9604001820AD /* NewsListViewController.swift in Sources */,
+				EBC48D702C0DA658001820AD /* NaverClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
