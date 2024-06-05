@@ -1,10 +1,10 @@
 import UIKit
 
-// ExchangeRate 모델
+// MARK: - DataModel
 struct ExchangeRate: Codable {
 	let result: Int?
 	let currencyCode: String? // 통화코드
- 	let currencyName: String? // 통화이름
+	let currencyName: String? // 통화이름
 	let rate: String?
 	var changePercentage: String?
 
@@ -17,6 +17,7 @@ struct ExchangeRate: Codable {
 	}
 }
 
+// MARK: - API Service
 class ExchangeRateAPIService {
 	func getExchangeRates(for date: String, apiKey: String, completion: @escaping (Result<[ExchangeRate], Error>) -> Void) {
 		guard var urlComponents = URLComponents(string: "https://www.koreaexim.go.kr/site/program/financial/exchangeJSON") else {
@@ -65,7 +66,7 @@ class ExchangeRateAPIService {
 	}
 }
 
-// 어제와 오늘 환율 비교
+// MARK: - Exchange Rate Service
 class ExchangeRateService {
 	private let apiService = ExchangeRateAPIService()
 
@@ -120,7 +121,7 @@ class ExchangeRateService {
 	}
 }
 
-// 뷰 컨트롤러
+// MARK: - ViewController
 class ListView: UIViewController {
 	var exchangeRates: [ExchangeRate] = []
 	let exchangeRateService = ExchangeRateService()
@@ -187,7 +188,8 @@ class ListView: UIViewController {
 			}
 		}
 	}
-	// API키를 plist파일에서 로드
+
+	// MARK: - API Key Loading
 	func loadAPIKey() -> String? {
 		guard let filePath = Bundle.main.path(forResource: "API_KEY", ofType: "plist") else {
 			print("Couldn't find file 'API_KEY.plist'.")
@@ -203,7 +205,7 @@ class ListView: UIViewController {
 		return apiKey
 	}
 
-	// 어제의 환율과 오늘의 환율을 비교하여 등락률표시
+	// MARK: - Rate Comparison
 	func compareRates(todayRates: [ExchangeRate], yesterdayRates: [ExchangeRate]) -> [ExchangeRate] {
 		var updatedRates: [ExchangeRate] = []
 
@@ -255,6 +257,7 @@ class ListView: UIViewController {
 		return String(format: "%.2f", change) + "%"
 	}
 
+	// MARK: - Exchange Rate View Update
 	func updateExchangeRateView() {
 		guard let exchangeRateView = view.subviews.compactMap({ $0 as? UIStackView }).first else { return }
 		exchangeRateView.arrangedSubviews.forEach { $0.removeFromSuperview() }
@@ -319,6 +322,7 @@ class ListView: UIViewController {
 		present(sheetViewController, animated: true)
 	}
 
+	// MARK: - Countdown Timer
 	func startCountdownTimer() {
 		countdownTimer?.invalidate()
 		countdownTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateCountdown), userInfo: nil, repeats: true)
@@ -340,3 +344,4 @@ class ListView: UIViewController {
 		timeRemaining = 300
 	}
 }
+
