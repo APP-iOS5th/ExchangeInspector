@@ -1,3 +1,10 @@
+//
+//  ListView.swift
+//  환율 리스트 뷰
+//
+//  Created by 한상현 on 6/3/24.
+//
+
 import UIKit
 
 // MARK: - DataModel
@@ -129,6 +136,8 @@ class ListView: UIViewController {
 	var countdownTimer: Timer?
 	var countdownLabel: UILabel!
 	var timeRemaining: Int = 300 // 5분
+	
+	let exchangeRateView = UIStackView()
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -136,33 +145,54 @@ class ListView: UIViewController {
 
 		let titleLabel = UILabel()
 		titleLabel.text = "오늘의 환율"
-		titleLabel.font = UIFont.systemFont(ofSize: 24)
+		titleLabel.font = UIFont.systemFont(ofSize: 30)
 		titleLabel.translatesAutoresizingMaskIntoConstraints = false
 		titleLabel.textColor = .label
-		view.addSubview(titleLabel)
-
-		let exchangeRateView = UIStackView()
-		exchangeRateView.axis = .vertical
-		exchangeRateView.spacing = 10
-		exchangeRateView.translatesAutoresizingMaskIntoConstraints = false
-		view.addSubview(exchangeRateView)
 
 		countdownLabel = UILabel()
 		countdownLabel.font = UIFont.systemFont(ofSize: 14)
 		countdownLabel.translatesAutoresizingMaskIntoConstraints = false
 		countdownLabel.textColor = .secondaryLabel
-		view.addSubview(countdownLabel)
+
+		let headerStackView = UIStackView(arrangedSubviews: [titleLabel, countdownLabel])
+		headerStackView.axis = .horizontal
+		headerStackView.spacing = 10
+		headerStackView.translatesAutoresizingMaskIntoConstraints = false
+		view.addSubview(headerStackView)
+
+		let scrollView = UIScrollView()
+		scrollView.translatesAutoresizingMaskIntoConstraints = false
+		view.addSubview(scrollView)
+
+		let contentView = UIView()
+		contentView.translatesAutoresizingMaskIntoConstraints = false
+		scrollView.addSubview(contentView)
+
+		exchangeRateView.axis = .vertical
+		exchangeRateView.spacing = 10
+		exchangeRateView.translatesAutoresizingMaskIntoConstraints = false
+		contentView.addSubview(exchangeRateView)
 
 		NSLayoutConstraint.activate([
-			titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-			titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+			headerStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+			headerStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 40),
+			headerStackView.trailingAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -40),
 
-			exchangeRateView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
-			exchangeRateView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-			exchangeRateView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
+			scrollView.topAnchor.constraint(equalTo: headerStackView.bottomAnchor, constant: 20),
+			scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+			scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+			scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
 
-			countdownLabel.topAnchor.constraint(equalTo: exchangeRateView.bottomAnchor, constant: 10),
-			countdownLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+			contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+			contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+			contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+			contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+			contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+
+			exchangeRateView.topAnchor.constraint(equalTo: contentView.topAnchor),
+			exchangeRateView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 30),
+			exchangeRateView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30),
+			exchangeRateView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
 		])
 
 		updateData()
@@ -259,7 +289,6 @@ class ListView: UIViewController {
 
 	// MARK: - Exchange Rate View Update
 	func updateExchangeRateView() {
-		guard let exchangeRateView = view.subviews.compactMap({ $0 as? UIStackView }).first else { return }
 		exchangeRateView.arrangedSubviews.forEach { $0.removeFromSuperview() }
 
 		for rate in exchangeRates {
@@ -344,4 +373,3 @@ class ListView: UIViewController {
 		timeRemaining = 300
 	}
 }
-
