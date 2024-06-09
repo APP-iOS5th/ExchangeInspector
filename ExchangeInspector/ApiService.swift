@@ -12,7 +12,7 @@ struct ExchangeRate: Codable {
 
     let cur_unit: String
     let deal_bas_r: String
-    let cur_nm: String
+    let cur_nm: String 
 }
 struct ApiService {
     static let shared = ApiService()
