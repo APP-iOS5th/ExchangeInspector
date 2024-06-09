@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B008C5F2C158DAE00C0C78B /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B008C5E2C158DAE00C0C78B /* ApiService.swift */; };
+		4BC504482C0DADC60035FBDA /* CurrencyConverterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC504472C0DADC60035FBDA /* CurrencyConverterViewController.swift */; };
 		EBC48D562C0D8770001820AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC48D552C0D8770001820AD /* AppDelegate.swift */; };
 		EBC48D582C0D8770001820AD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC48D572C0D8770001820AD /* SceneDelegate.swift */; };
 		EBC48D5A2C0D8770001820AD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC48D592C0D8770001820AD /* ViewController.swift */; };
@@ -15,6 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4B008C5E2C158DAE00C0C78B /* ApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
+		4BC504472C0DADC60035FBDA /* CurrencyConverterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyConverterViewController.swift; sourceTree = "<group>"; };
 		EBC48D522C0D8770001820AD /* ExchangeInspector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExchangeInspector.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBC48D552C0D8770001820AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EBC48D572C0D8770001820AD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -56,6 +60,8 @@
 			children = (
 				EBC48D552C0D8770001820AD /* AppDelegate.swift */,
 				EBC48D572C0D8770001820AD /* SceneDelegate.swift */,
+				4BC504472C0DADC60035FBDA /* CurrencyConverterViewController.swift */,
+				4B008C5E2C158DAE00C0C78B /* ApiService.swift */,
 				EBC48D592C0D8770001820AD /* ViewController.swift */,
 				EBC48D5E2C0D8771001820AD /* Assets.xcassets */,
 				EBC48D602C0D8771001820AD /* LaunchScreen.storyboard */,
@@ -136,6 +142,8 @@
 			files = (
 				EBC48D5A2C0D8770001820AD /* ViewController.swift in Sources */,
 				EBC48D562C0D8770001820AD /* AppDelegate.swift in Sources */,
+				4BC504482C0DADC60035FBDA /* CurrencyConverterViewController.swift in Sources */,
+				4B008C5F2C158DAE00C0C78B /* ApiService.swift in Sources */,
 				EBC48D582C0D8770001820AD /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

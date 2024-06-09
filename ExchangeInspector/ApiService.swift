@@ -7,9 +7,6 @@
 
 import UIKit
 
-struct ExchangeRateModel: Codable {
-    let exchangeRates: [ExchangeRate]
-}
 
 struct ExchangeRate: Codable {
 
@@ -17,7 +14,7 @@ struct ExchangeRate: Codable {
     let deal_bas_r: String
     let cur_nm: String
 }
-struct ApiService{
+struct ApiService {
     static let shared = ApiService()
     let url = "https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?"
     let apiKey = "dNbyuQOGbYXb26ido5zgI1Y8luD43iAZ"
@@ -39,10 +36,13 @@ struct ApiService{
             // 에러가 발생하지 않다면 if let 구문으로 들어와 data (옵셔널 데이터)를 언래핑 하게 된다.
             if let safeData = data {
                 do{
-                    let decodeData = try JSONDecoder().decode(ExchangeRateModel.self, from: safeData)
+                    let decodeData = try JSONDecoder().decode([ExchangeRate].self, from: safeData)
+                    for rate in decodeData {
+                                    print("Currency Unit: \(rate.cur_unit), Deal Base Rate: \(rate.deal_bas_r), name \(rate.cur_nm)")
+                                }
                     completion(.success(decodeData))
                 } catch {
-                    print(error.localizedDescription)
+                    print("safeData: \(error.localizedDescription)")
                 }
                 
             }

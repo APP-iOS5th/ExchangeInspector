@@ -31,7 +31,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         firstViewController.tabBarItem = UITabBarItem(title: "환율 리스트", image: UIImage(systemName: "arrow.up.right"), tag: 0)
         
         // 두번째 탭(환율 계산기)
-        let secondViewController = UIViewController()
+        let secondViewController = CurrencyConverterViewController()
         secondViewController.view.backgroundColor = .white
         secondViewController.tabBarItem = UITabBarItem(title: "환율 계산기", image: UIImage(systemName: "arrow.left.arrow.right"), tag: 1)
         
