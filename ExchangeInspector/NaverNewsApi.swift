@@ -3,7 +3,7 @@
 //  ExchangeInspector
 //
 //  Created by 황승혜 on 6/3/24.
-//  Naver Api 연결
+//  Naver Api 연결 및 에러 출력
 
 import Foundation
 import UIKit
