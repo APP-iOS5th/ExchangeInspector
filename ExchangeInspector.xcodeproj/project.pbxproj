@@ -7,21 +7,30 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BF8D05A32C104A2B00D1A60D /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8D05A22C104A2B00D1A60D /* ListView.swift */; };
+		BFDAE1362C16DBFC0096EF2C /* CurrencyConverterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDAE1352C16DBFC0096EF2C /* CurrencyConverterViewController.swift */; };
+		BFDAE1382C16DEB80096EF2C /* ExchangeRateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDAE1372C16DEB80096EF2C /* ExchangeRateService.swift */; };
 		EB61BD4A2C0ED92400D5324C /* NewsCustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB61BD492C0ED92400D5324C /* NewsCustomTableViewCell.swift */; };
 		EB86295C2C16A0160005C6BE /* CountryNewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB86295B2C16A0160005C6BE /* CountryNewsViewController.swift */; };
+		EB8629622C16F2320005C6BE /* API_KEY.plist in Resources */ = {isa = PBXBuildFile; fileRef = EB8629612C16F2320005C6BE /* API_KEY.plist */; };
+		EB8629642C16F2390005C6BE /* NaverClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8629632C16F2390005C6BE /* NaverClient.swift */; };
 		EBC48D562C0D8770001820AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC48D552C0D8770001820AD /* AppDelegate.swift */; };
 		EBC48D582C0D8770001820AD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC48D572C0D8770001820AD /* SceneDelegate.swift */; };
 		EBC48D5F2C0D8771001820AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBC48D5E2C0D8771001820AD /* Assets.xcassets */; };
 		EBC48D622C0D8771001820AD /* Base in Resources */ = {isa = PBXBuildFile; fileRef = EBC48D612C0D8771001820AD /* Base */; };
 		EBC48D6C2C0D9604001820AD /* NewsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC48D6B2C0D9604001820AD /* NewsListViewController.swift */; };
 		EBC48D6E2C0D9C37001820AD /* NaverNewsApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC48D6D2C0D9C37001820AD /* NaverNewsApi.swift */; };
-		EBC48D702C0DA658001820AD /* NaverClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC48D6F2C0DA658001820AD /* NaverClient.swift */; };
 		EBC48D722C0DB03F001820AD /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC48D712C0DB03F001820AD /* NewsModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BF8D05A22C104A2B00D1A60D /* ListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
+		BFDAE1352C16DBFC0096EF2C /* CurrencyConverterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyConverterViewController.swift; sourceTree = "<group>"; };
+		BFDAE1372C16DEB80096EF2C /* ExchangeRateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateService.swift; sourceTree = "<group>"; };
 		EB61BD492C0ED92400D5324C /* NewsCustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCustomTableViewCell.swift; sourceTree = "<group>"; };
 		EB86295B2C16A0160005C6BE /* CountryNewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryNewsViewController.swift; sourceTree = "<group>"; };
+		EB8629612C16F2320005C6BE /* API_KEY.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = API_KEY.plist; sourceTree = "<group>"; };
+		EB8629632C16F2390005C6BE /* NaverClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NaverClient.swift; sourceTree = "<group>"; };
 		EBC48D522C0D8770001820AD /* ExchangeInspector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExchangeInspector.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBC48D552C0D8770001820AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EBC48D572C0D8770001820AD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -30,7 +39,6 @@
 		EBC48D632C0D8771001820AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EBC48D6B2C0D9604001820AD /* NewsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsListViewController.swift; sourceTree = "<group>"; };
 		EBC48D6D2C0D9C37001820AD /* NaverNewsApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaverNewsApi.swift; sourceTree = "<group>"; };
-		EBC48D6F2C0DA658001820AD /* NaverClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaverClient.swift; sourceTree = "<group>"; };
 		EBC48D712C0DB03F001820AD /* NewsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -64,14 +72,18 @@
 		EBC48D542C0D8770001820AD /* ExchangeInspector */ = {
 			isa = PBXGroup;
 			children = (
+				EB8629632C16F2390005C6BE /* NaverClient.swift */,
+				EB8629612C16F2320005C6BE /* API_KEY.plist */,
 				EBC48D552C0D8770001820AD /* AppDelegate.swift */,
 				EBC48D572C0D8770001820AD /* SceneDelegate.swift */,
+				BFDAE1352C16DBFC0096EF2C /* CurrencyConverterViewController.swift */,
 				EBC48D6B2C0D9604001820AD /* NewsListViewController.swift */,
 				EB86295B2C16A0160005C6BE /* CountryNewsViewController.swift */,
+				BFDAE1372C16DEB80096EF2C /* ExchangeRateService.swift */,
 				EB61BD492C0ED92400D5324C /* NewsCustomTableViewCell.swift */,
+				BF8D05A22C104A2B00D1A60D /* ListView.swift */,
 				EBC48D6D2C0D9C37001820AD /* NaverNewsApi.swift */,
 				EBC48D712C0DB03F001820AD /* NewsModel.swift */,
-				EBC48D6F2C0DA658001820AD /* NaverClient.swift */,
 				EBC48D5E2C0D8771001820AD /* Assets.xcassets */,
 				EBC48D602C0D8771001820AD /* LaunchScreen.storyboard */,
 				EBC48D632C0D8771001820AD /* Info.plist */,
@@ -95,6 +107,8 @@
 			dependencies = (
 			);
 			name = ExchangeInspector;
+			packageProductDependencies = (
+			);
 			productName = ExchangeInspector;
 			productReference = EBC48D522C0D8770001820AD /* ExchangeInspector.app */;
 			productType = "com.apple.product-type.application";
@@ -123,6 +137,8 @@
 				Base,
 			);
 			mainGroup = EBC48D492C0D8770001820AD;
+			packageReferences = (
+			);
 			productRefGroup = EBC48D532C0D8770001820AD /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -137,6 +153,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB8629622C16F2320005C6BE /* API_KEY.plist in Resources */,
 				EBC48D5F2C0D8771001820AD /* Assets.xcassets in Resources */,
 				EBC48D622C0D8771001820AD /* Base in Resources */,
 			);
@@ -149,14 +166,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFDAE1362C16DBFC0096EF2C /* CurrencyConverterViewController.swift in Sources */,
 				EBC48D722C0DB03F001820AD /* NewsModel.swift in Sources */,
 				EBC48D6E2C0D9C37001820AD /* NaverNewsApi.swift in Sources */,
+				BFDAE1382C16DEB80096EF2C /* ExchangeRateService.swift in Sources */,
 				EB86295C2C16A0160005C6BE /* CountryNewsViewController.swift in Sources */,
 				EB61BD4A2C0ED92400D5324C /* NewsCustomTableViewCell.swift in Sources */,
 				EBC48D562C0D8770001820AD /* AppDelegate.swift in Sources */,
 				EBC48D582C0D8770001820AD /* SceneDelegate.swift in Sources */,
 				EBC48D6C2C0D9604001820AD /* NewsListViewController.swift in Sources */,
-				EBC48D702C0DA658001820AD /* NaverClient.swift in Sources */,
+				EB8629642C16F2390005C6BE /* NaverClient.swift in Sources */,
+				BF8D05A32C104A2B00D1A60D /* ListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
