@@ -61,6 +61,14 @@ class ExchangeRateAPIService {
 			do {
 				let jsonString = String(data: data, encoding: .utf8)
 				print("Response JSON: \(jsonString ?? "No data")")
+				
+				// Check if the response is an empty array
+				if jsonString == "[]" {
+					print("API response is an empty array")
+					completion(.success([]))
+					return
+				}
+				
 				let exchangeRates = try JSONDecoder().decode([ExchangeRate].self, from: data)
 				completion(.success(exchangeRates))
 			} catch {
@@ -79,7 +87,7 @@ class ExchangeRateService {
 
 	func fetchExchangeRates(apiKey: String, completion: @escaping ([ExchangeRate], [ExchangeRate]) -> Void) {
 		let today = getDate(daysAgo: 0)
-		let yesterday = getDate(daysAgo: 1)
+		let yesterday = getLastBusinessDay()
 
 		print("Fetching exchange rates for today: \(today) and yesterday: \(yesterday)")
 
@@ -101,7 +109,7 @@ class ExchangeRateService {
 		}
 
 		group.enter()
-		apiService.getExchangeRates(for: yesterday, apiKey: apiKey) { result in
+		fetchLastValidRates(for: yesterday, apiKey: apiKey) { result in
 			switch result {
 			case .success(let rates):
 				print("Successfully fetched yesterday's rates")
@@ -114,6 +122,10 @@ class ExchangeRateService {
 
 		group.notify(queue: .main) {
 			print("Today rates count: \(todayRates.count), Yesterday rates count: \(yesterdayRates.count)")
+			// 오늘 데이터가 없으면 어제 데이터를 오늘 데이터로 사용
+			if todayRates.isEmpty, !yesterdayRates.isEmpty {
+				todayRates = yesterdayRates
+			}
 			completion(todayRates, yesterdayRates)
 		}
 	}
@@ -125,6 +137,75 @@ class ExchangeRateService {
 		dateFormatter.dateFormat = "yyyyMMdd"
 		let date = Calendar.current.date(byAdding: .day, value: -daysAgo, to: Date())!
 		return dateFormatter.string(from: date)
+	}
+	
+	private func getLastBusinessDay() -> String {
+		var date = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
+		let calendar = Calendar(identifier: .gregorian)
+		while isWeekend(date: date) {
+			date = calendar.date(byAdding: .day, value: -1, to: date)!
+		}
+		return getDate(from: date)
+	}
+
+	private func isWeekend(date: Date) -> Bool {
+		let calendar = Calendar(identifier: .gregorian)
+		let components = calendar.dateComponents([.weekday], from: date)
+		if let weekday = components.weekday {
+			return weekday == 7 || weekday == 1 // Saturday or Sunday
+		}
+		return false
+	}
+
+	private func getDate(from date: Date) -> String {
+		let koreanTimeZone = TimeZone(identifier: "Asia/Seoul")!
+		let dateFormatter = DateFormatter()
+		dateFormatter.timeZone = koreanTimeZone
+		dateFormatter.dateFormat = "yyyyMMdd"
+		return dateFormatter.string(from: date)
+	}
+
+	private func fetchLastValidRates(for date: String, apiKey: String, completion: @escaping (Result<[ExchangeRate], Error>) -> Void) {
+		var currentDate = date
+		
+		func attemptFetch() {
+			apiService.getExchangeRates(for: currentDate, apiKey: apiKey) { result in
+				switch result {
+				case .success(let rates):
+					if rates.isEmpty {
+						print("No rates found for date: \(currentDate), trying previous day.")
+						if let previousDate = self.getPreviousDate(from: currentDate) {
+							currentDate = previousDate
+							attemptFetch()
+						} else {
+							completion(.failure(NSError(domain: "NoValidRates", code: -1, userInfo: nil)))
+						}
+					} else {
+						completion(.success(rates))
+					}
+				case .failure(let error):
+					print("Failed to fetch rates for date: \(currentDate), error: \(error)")
+					if let previousDate = self.getPreviousDate(from: currentDate) {
+						currentDate = previousDate
+						attemptFetch()
+					} else {
+						completion(.failure(error))
+					}
+				}
+			}
+		}
+		
+		attemptFetch()
+	}
+
+	private func getPreviousDate(from dateString: String) -> String? {
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateFormat = "yyyyMMdd"
+		if let date = dateFormatter.date(from: dateString) {
+			let previousDate = Calendar.current.date(byAdding: .day, value: -1, to: date)!
+			return dateFormatter.string(from: previousDate)
+		}
+		return nil
 	}
 }
 
