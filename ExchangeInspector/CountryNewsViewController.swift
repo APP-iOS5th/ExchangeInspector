@@ -19,11 +19,12 @@ class CountryNewsViewController: UIViewController, UITableViewDataSource, UITabl
         title = "\(queryValue) 뉴스"
         
         setupTableView()
-        fetchNews(queryValue: queryValue)
+        fetchNews(queryValue: queryValue, display: 20)
         print("\(queryValue) 뉴스 리스트 출력")
     }
     
-    // 뉴스 출력 테이블 뷰
+    // 뉴스 리스트 출력 테이블 뷰
+    // TODO: - 뉴스 리스트 기준 시각 추가
     private func setupTableView() {
         view.addSubview(tableView)
         tableView.frame = view.bounds
@@ -32,8 +33,8 @@ class CountryNewsViewController: UIViewController, UITableViewDataSource, UITabl
         tableView.register(NewsCustomTableViewCell.self, forCellReuseIdentifier: "newsCell")
     }
     
-    private func fetchNews(queryValue: String) {
-        NaverNewsApi.shared.requestNews(queryValue: "\(queryValue) 경제, 금융") { [weak self] items in
+    private func fetchNews(queryValue: String, display: Int) {
+        NaverNewsApi.shared.requestNews(queryValue: "\(queryValue) 경제, 금융", display: display) { [weak self] items in
             DispatchQueue.main.async {
                 self?.news = items ?? []
                 self?.tableView.reloadData()
@@ -54,7 +55,7 @@ class CountryNewsViewController: UIViewController, UITableViewDataSource, UITabl
         cell.configure(with: newsItem)
         return cell
     }
-    // TODO: - 뉴스 디테일 뷰 -> 웹 뷰
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detailVC = WebViewController()
         detailVC.urlString = news[indexPath.row].link

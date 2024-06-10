@@ -12,11 +12,11 @@ class NaverNewsApi {
     static var shared = NaverNewsApi()
     let jsonDecoder: JSONDecoder = JSONDecoder()
     
-    func requestNews(queryValue: String, completion: @escaping ([Item]?) -> Void) {
+    func requestNews(queryValue: String, display: Int, completion: @escaping ([Item]?) -> Void) {
         let clientID: String = NaverClient().naverClientID
         let clientKey: String = NaverClient().naverClientSecret
         
-        let query: String = "https://openapi.naver.com/v1/search/news.json?query=\(queryValue)"
+        let query: String = "https://openapi.naver.com/v1/search/news.json?query=\(queryValue)&display=\(display)"
         let encodedQuery: String = query.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!
         let queryURL: URL = URL(string: encodedQuery)!
         

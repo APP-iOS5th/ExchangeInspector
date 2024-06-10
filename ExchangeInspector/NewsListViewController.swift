@@ -10,15 +10,14 @@ import UIKit
 class NewsListViewController: UIViewController {
     private let titleLabel = UILabel()
     private let newsCountryListView = UIStackView()
-    private var queryValue: String = "" // 검색 쿼리에 넣을 문자열
     var listCountries: [String] = ["미국", "일본", "유럽연합", "중국", "영국", "호주", "홍콩"] // 환율 리스트에 출력되는 국가들(추후 수정)
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         
-        titleLabel.text = "뉴스"
-        titleLabel.font = UIFont.systemFont(ofSize: 24)
+        titleLabel.text = "국가 별 뉴스"
+        titleLabel.font = UIFont.systemFont(ofSize: 30)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.textColor = .label
         view.addSubview(titleLabel)
@@ -45,10 +44,11 @@ class NewsListViewController: UIViewController {
             
             newsCountryListView.addArrangedSubview(button)
             button.addAction(UIAction { _ in
-                self.queryValue = country
-                print("\(self.queryValue) 선택")
+                let newsVC = CountryNewsViewController()
+                newsVC.queryValue = country
+                self.navigationController?.pushViewController(newsVC, animated: true)
+                print("\(newsVC.queryValue) 선택")
             }, for: .touchUpInside)
-            button.addAction(UIAction(handler: buttonTapped), for: .touchUpInside)
         }
     }
     
@@ -88,12 +88,5 @@ class NewsListViewController: UIViewController {
         ])
         
         return button
-    }
-    
-    private func buttonTapped(_ action: UIAction) {
-        // TODO: - 출력 뉴스 개수 조정, 새로고침 기능
-        let newsVC = CountryNewsViewController()
-        newsVC.queryValue = queryValue
-        navigationController?.pushViewController(newsVC, animated: true)
     }
 }
