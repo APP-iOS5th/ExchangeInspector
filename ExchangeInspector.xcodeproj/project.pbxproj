@@ -158,6 +158,8 @@
 				EBC48D6E2C0D9C37001820AD /* NaverNewsApi.swift in Sources */,
 				EB61BD4A2C0ED92400D5324C /* NewsCustomTableViewCell.swift in Sources */,
 				EBC48D562C0D8770001820AD /* AppDelegate.swift in Sources */,
+				4BC504482C0DADC60035FBDA /* CurrencyConverterViewController.swift in Sources */,
+				4B008C5F2C158DAE00C0C78B /* ApiService.swift in Sources */,
 				EBC48D582C0D8770001820AD /* SceneDelegate.swift in Sources */,
 				EBC48D6C2C0D9604001820AD /* NewsListViewController.swift in Sources */,
 				BF8D05A32C104A2B00D1A60D /* ListView.swift in Sources */,
