@@ -6,6 +6,7 @@
 //  나라 별 뉴스 리스트 출력
 
 import UIKit
+import WebKit
 
 class CountryNewsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     private let tableView = UITableView()
@@ -55,22 +56,37 @@ class CountryNewsViewController: UIViewController, UITableViewDataSource, UITabl
     }
     // TODO: - 뉴스 디테일 뷰 -> 웹 뷰
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let detailVC = UIViewController()
-        detailVC.view.backgroundColor = .white
-        detailVC.title = "뉴스 상세"
+        let detailVC = WebViewController()
+        detailVC.urlString = news[indexPath.row].link
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
+}
+
+class WebViewController: UIViewController {
+    var urlString: String?
+    private lazy var webView: WKWebView = {
+        let webView = WKWebView(frame: .zero)
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        return webView
+    }()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        title = "뉴스 상세"
         
-        let label = UILabel()
-        label.text = news[indexPath.row].description
-        label.numberOfLines = 0
-        label.translatesAutoresizingMaskIntoConstraints = false
-        detailVC.view.addSubview(label)
+        view.addSubview(webView)
         
         NSLayoutConstraint.activate([
-            label.topAnchor.constraint(equalTo: detailVC.view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            label.leadingAnchor.constraint(equalTo: detailVC.view.leadingAnchor, constant: 20),
-            label.trailingAnchor.constraint(equalTo: detailVC.view.trailingAnchor, constant: -20)
+            webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            webView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            webView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
         
-        navigationController?.pushViewController(detailVC, animated: true)
+        if let urlString = urlString, let url = URL(string: urlString) {
+            let request = URLRequest(url: url)
+            webView.load(request)
+        }
     }
 }
