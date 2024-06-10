@@ -38,12 +38,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // 세번째 탭(뉴스)
         let thirdViewController = NewsListViewController()
         thirdViewController.view.backgroundColor = .white
-        thirdViewController.tabBarItem = UITabBarItem(title: "뉴스", image: UIImage(systemName: "newspaper"), tag: 2)
+        let thirdNavigationController = UINavigationController(rootViewController: thirdViewController)
+        thirdNavigationController.tabBarItem = UITabBarItem(title: "뉴스", image: UIImage(systemName: "newspaper"), tag: 2)
         
         tabBarController.viewControllers = [
             firstViewController,
             secondViewController,
-            thirdViewController
+            thirdNavigationController
         ]
         
         return tabBarController

@@ -3,16 +3,14 @@
 //  ExchangeInspector
 //
 //  Created by 황승혜 on 6/3/24.
-//  세번째 탭(뉴스) 화면 구현
+//  세번째 탭(뉴스) 나라 목록 구현
 
 import UIKit
 
-class NewsListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    private let tableView = UITableView()
+class NewsListViewController: UIViewController {
     private let titleLabel = UILabel()
     private let newsCountryListView = UIStackView()
     private var queryValue: String = "" // 검색 쿼리에 넣을 문자열
-    private var news: [Item] = []
     var listCountries: [String] = ["미국", "일본", "유럽연합", "중국", "영국", "호주", "홍콩"] // 환율 리스트에 출력되는 국가들(추후 수정)
 
     override func viewDidLoad() {
@@ -48,6 +46,7 @@ class NewsListViewController: UIViewController, UITableViewDataSource, UITableVi
             newsCountryListView.addArrangedSubview(button)
             button.addAction(UIAction { _ in
                 self.queryValue = country
+                print("\(self.queryValue) 선택")
             }, for: .touchUpInside)
             button.addAction(UIAction(handler: buttonTapped), for: .touchUpInside)
         }
@@ -92,45 +91,9 @@ class NewsListViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     private func buttonTapped(_ action: UIAction) {
-        // TODO: - 뒤로가기 버튼, 출력 뉴스 개수 조정, 새로고침 기능
-        setupTableView()
-        fetchNews(queryValue: queryValue)
+        // TODO: - 출력 뉴스 개수 조정, 새로고침 기능
+        let newsVC = CountryNewsViewController()
+        newsVC.queryValue = queryValue
+        navigationController?.pushViewController(newsVC, animated: true)
     }
-    
-    // 뉴스 출력 테이블 뷰
-    private func setupTableView() {
-        view.addSubview(tableView)
-        tableView.frame = view.bounds
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(NewsCustomTableViewCell.self, forCellReuseIdentifier: "newsCell")
-    }
-    
-    private func fetchNews(queryValue: String) {
-        NaverNewsApi.shared.requestNews(queryValue: "\(queryValue) 경제, 금융") { [weak self] items in
-            DispatchQueue.main.async {
-                self?.news = items ?? []
-                self?.tableView.reloadData()
-            }
-        }
-    }
-    
-    // MARK: - TableView Data Sources
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return news.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "newsCell", for: indexPath) as? NewsCustomTableViewCell else {
-            return UITableViewCell()
-        }
-        let newsItem = news[indexPath.row]
-        cell.configure(with: newsItem)
-        return cell
-    }
-    // TODO: - 뉴스 디테일 뷰
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        
-//        let detailVC = NewsDetailViewController()
-//    }
 }
