@@ -16,7 +16,7 @@ class NewsListViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         
-        titleLabel.text = "국가 별 뉴스"
+        titleLabel.text = "국가"
         titleLabel.font = UIFont.systemFont(ofSize: 30)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.textColor = .label
@@ -24,13 +24,13 @@ class NewsListViewController: UIViewController {
         
         newsCountryListView.axis = .vertical
         newsCountryListView.alignment = .fill
-        newsCountryListView.distribution = .fillEqually
+        newsCountryListView.distribution = .equalSpacing
         newsCountryListView.spacing = 10
         newsCountryListView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(newsCountryListView)
         
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -18),
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             newsCountryListView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
@@ -41,14 +41,19 @@ class NewsListViewController: UIViewController {
         // 국가 리스트 버튼
         for country in listCountries {
             let button = createCustomButton(with: country)
-            
             newsCountryListView.addArrangedSubview(button)
+            
             button.addAction(UIAction { _ in
                 let newsVC = CountryNewsViewController()
                 newsVC.queryValue = country
                 self.navigationController?.pushViewController(newsVC, animated: true)
                 print("\(newsVC.queryValue) 선택")
             }, for: .touchUpInside)
+            
+            NSLayoutConstraint.activate([
+                button.heightAnchor.constraint(equalToConstant: 50),
+                button.widthAnchor.constraint(equalTo: newsCountryListView.widthAnchor)
+            ])
         }
     }
     
@@ -63,6 +68,7 @@ class NewsListViewController: UIViewController {
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.spacing = 8
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         
         let label = UILabel()
         label.text = title
@@ -79,7 +85,7 @@ class NewsListViewController: UIViewController {
         
         // 버튼에 스택 뷰 추가
         button.addSubview(stackView)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
+        //stackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: button.leadingAnchor, constant: 16),
             stackView.trailingAnchor.constraint(equalTo: button.trailingAnchor, constant: -16),
