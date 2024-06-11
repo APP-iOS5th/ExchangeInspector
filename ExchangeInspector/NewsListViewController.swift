@@ -10,7 +10,7 @@ import UIKit
 class NewsListViewController: UIViewController {
     private let titleLabel = UILabel()
     private let newsCountryListView = UIStackView()
-    var listCountries: [String] = ["미국", "일본", "유럽연합", "중국", "영국", "호주", "홍콩"] // 환율 리스트에 출력되는 국가들(추후 수정)
+    var listCountries: [String] = ["대한민국", "미국", "중국", "일본", "영국", "유럽연합", "홍콩"] // 환율 리스트에 출력되는 국가들
 
     override func viewDidLoad() {
         super.viewDidLoad()

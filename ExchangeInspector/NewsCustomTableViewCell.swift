@@ -61,8 +61,21 @@ class NewsCustomTableViewCell: UITableViewCell {
     }
     
     func configure(with item: Item) {
-        titleLabel.text = item.title
-        descriptionLabel.text = item.description
+        titleLabel.text = removeTag(tag: item.title)
+        descriptionLabel.text = removeTag(tag: item.description)
         pubDateLabel.text = item.pubDate
+    }
+    
+    // MARK: - HTML 태그 제거 함수
+    func removeTag(tag: String) -> String {
+        var removeB = tag.replacingOccurrences(of: "<b>", with: "")
+        var removeB2 = removeB.replacingOccurrences(of: "</b>", with: "")
+        var removeQuot = removeB2.replacingOccurrences(of: "&quot;", with: "")
+        var removeLT = removeQuot.replacingOccurrences(of: "&lt;", with: "")
+        var removeGT = removeLT.replacingOccurrences(of: "&gt;", with: "")
+        var removeA = removeGT.replacingOccurrences(of: "&amp;", with: "")
+        var removeAll = removeA.replacingOccurrences(of: "R&amp;D", with: "")
+        
+        return removeAll
     }
 }
