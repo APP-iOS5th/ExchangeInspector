@@ -15,10 +15,11 @@ class CurrencyConverterViewController: UIViewController {
     
     private let baseCurrencyTitleTextField: UITextField = {
         let testField = UITextField()
-        testField.text = "클릭하여 국가를 선택 해주세요"
-        testField.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+        testField.text = "글씨를 클릭하여 국가를 선택 해주세요"
+        testField.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         testField.textAlignment = .left
         testField.translatesAutoresizingMaskIntoConstraints = false
+        testField.textColor = .systemBlue
         return testField
     }()
     
@@ -26,7 +27,7 @@ class CurrencyConverterViewController: UIViewController {
         let textField = UITextField()
         textField.placeholder = "숫자를 입력해주세요"
         textField.keyboardType = .numberPad
-        textField.textAlignment = .right
+        textField.textAlignment = .right        
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
@@ -43,7 +44,7 @@ class CurrencyConverterViewController: UIViewController {
     private let quoteCurrencyLabel: UILabel = {
         let label = UILabel()
         label.text = "대한민국"
-        label.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -52,6 +53,7 @@ class CurrencyConverterViewController: UIViewController {
         let label = UILabel()
         label.text = "0.0"
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 30, weight: .semibold)
         return label
         
     }()
@@ -68,7 +70,7 @@ class CurrencyConverterViewController: UIViewController {
     }()
     
     var exchangeRateList: [ExchangeRate] = []
-    var dealBasR: Double = 0.0
+    var dealBasR: Double = 1
     
     //MARK: - viewDidLoad
     override func viewDidLoad() {
@@ -77,7 +79,7 @@ class CurrencyConverterViewController: UIViewController {
         pickerview.delegate = self
         pickerview.dataSource = self
         getExchangeRates()
-        
+        self.hideKeyboardwhenTappedAround()
         baseCurrencyTitleTextField.inputView = pickerview
         self.baseCurrencyTextField.addTarget(self, action: #selector(self.textFieldDidchange(_:)), for: .editingChanged)
     }
@@ -109,6 +111,9 @@ class CurrencyConverterViewController: UIViewController {
         view.addSubview(imageView)
         view.addSubview(quoteCurrencyLabel)
         view.addSubview(quoteCurrencyTextLabel)
+        
+        baseCurrencyTextField.sizeToFit()
+        quoteCurrencyTextLabel.sizeToFit()
         NSLayoutConstraint.activate([
             
             // baseCurrencyLabel
@@ -116,7 +121,7 @@ class CurrencyConverterViewController: UIViewController {
             baseCurrencyTitleTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
             
             // baseCurrencyTextFile
-            baseCurrencyTextField.topAnchor.constraint(equalTo: baseCurrencyTitleTextField.bottomAnchor, constant: 5),
+            baseCurrencyTextField.topAnchor.constraint(equalTo: baseCurrencyTitleTextField.bottomAnchor, constant: 20),
             baseCurrencyTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant:  -20),
             
             // imageView
@@ -138,16 +143,15 @@ class CurrencyConverterViewController: UIViewController {
     
     //텍스트 입력했을때 처리
     @objc func textFieldDidchange(_ sender: Any?) {
-        
-        if baseCurrencyTextField.text == "" {
+    if baseCurrencyTextField.text == "" {
             baseCurrencyTextField.text = nil
-            quoteCurrencyTextLabel.text = "0.0"
+            quoteCurrencyTextLabel.text = "0.00"
         }
                 updateLabel()
     }
     
     // 문자열  -> Double
-    func nummberFormatter(_ doubleString: String) -> Double {
+    func stringToDouble(_ doubleString: String) -> Double {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         if let number = formatter.number(from: doubleString) {
@@ -158,6 +162,7 @@ class CurrencyConverterViewController: UIViewController {
         return 0.0
     }
     
+    
     // label upDate
     func updateLabel() {
         guard let tempString = baseCurrencyTextField.text else {
@@ -167,8 +172,13 @@ class CurrencyConverterViewController: UIViewController {
         guard let temp = Double(tempString) else {
             return
         }
-        self.quoteCurrencyTextLabel.text = String(temp * dealBasR)
+        let numberFormatter: NumberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        let result:String = numberFormatter.string(from: (temp * dealBasR) as NSNumber)!
+        
+        self.quoteCurrencyTextLabel.text = result
     }
+    
     
 }
 
@@ -185,12 +195,13 @@ extension CurrencyConverterViewController: UIPickerViewDelegate, UIPickerViewDat
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        
         return exchangeRateList[row].cur_nm
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         baseCurrencyTitleTextField.text = exchangeRateList[row].cur_nm
-        dealBasR = nummberFormatter(exchangeRateList[row].deal_bas_r)
+        dealBasR = stringToDouble(exchangeRateList[row].deal_bas_r)
         baseCurrencyTitleTextField.resignFirstResponder()
         updateLabel()
     }
@@ -208,4 +219,18 @@ extension CurrencyConverterViewController: UITextFieldDelegate {
         return true
     }
     
+}
+
+
+extension CurrencyConverterViewController {
+    
+    func hideKeyboardwhenTappedAround() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(CurrencyConverterViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
 }

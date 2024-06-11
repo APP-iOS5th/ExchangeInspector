@@ -17,7 +17,7 @@ struct ExchangeRate: Codable {
 struct ApiService {
     static let shared = ApiService()
     let url = "https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?"
-    let apiKey = ""
+    let apiKey = "dNbyuQOGbYXb26ido5zgI1Y8luD43iAZ"
     let searchdate = "20240607"
     // AP01 : 환율 AP02 : 대출금리 AP03 : 국제금리
     let data = "AP01"
