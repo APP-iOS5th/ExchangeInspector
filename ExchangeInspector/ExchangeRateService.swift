@@ -31,7 +31,7 @@ class ExchangeRateService {
 		}
 
 		group.enter()
-		fetchLastValidRates(for: yesterday, apiKey: apiKey) { result in
+		apiService.getExchangeRates(for: yesterday, apiKey: apiKey) { result in
 			switch result {
 			case .success(let rates):
 				yesterdayRates = rates
@@ -42,9 +42,6 @@ class ExchangeRateService {
 		}
 
 		group.notify(queue: .main) {
-			if todayRates.isEmpty, !yesterdayRates.isEmpty {
-				todayRates = yesterdayRates
-			}
 			completion(todayRates, yesterdayRates)
 		}
 	}
@@ -83,46 +80,4 @@ class ExchangeRateService {
 		dateFormatter.dateFormat = "yyyyMMdd"
 		return dateFormatter.string(from: date)
 	}
-
-	private func fetchLastValidRates(for date: String, apiKey: String, completion: @escaping (Result<[ExchangeRate], Error>) -> Void) {
-		var currentDate = date
-
-		func attemptFetch() {
-			apiService.getExchangeRates(for: currentDate, apiKey: apiKey) { result in
-				switch result {
-				case .success(let rates):
-					if rates.isEmpty {
-						if let previousDate = self.getPreviousDate(from: currentDate) {
-							currentDate = previousDate
-							attemptFetch()
-						} else {
-							completion(.failure(NSError(domain: "NoValidRates", code: -1, userInfo: nil)))
-						}
-					} else {
-						completion(.success(rates))
-					}
-				case .failure:
-					if let previousDate = self.getPreviousDate(from: currentDate) {
-						currentDate = previousDate
-						attemptFetch()
-					} else {
-						completion(.failure(NSError(domain: "NoValidRates", code: -1, userInfo: nil)))
-					}
-				}
-			}
-		}
-
-		attemptFetch()
-	}
-
-	private func getPreviousDate(from dateString: String) -> String? {
-		let dateFormatter = DateFormatter()
-		dateFormatter.dateFormat = "yyyyMMdd"
-		if let date = dateFormatter.date(from: dateString) {
-			let previousDate = Calendar.current.date(byAdding: .day, value: -1, to: date)!
-			return dateFormatter.string(from: previousDate)
-		}
-		return nil
-	}
 }
-
