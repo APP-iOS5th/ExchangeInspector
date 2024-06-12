@@ -98,7 +98,7 @@ class ListView: UIViewController {
 
 		let titleLabel = UILabel()
 		titleLabel.text = "오늘의 환율"
-		titleLabel.font = UIFont.systemFont(ofSize: 30)
+        titleLabel.font = UIFont.systemFont(ofSize: 30, weight: .bold)
 		titleLabel.translatesAutoresizingMaskIntoConstraints = false
 		titleLabel.textColor = .label
 
