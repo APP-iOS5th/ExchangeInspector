@@ -12,15 +12,24 @@ import UIKit
 
 class CurrencyConverterViewController: UIViewController {
      
+     private let titleLebel: UILabel = {
+        let label = UILabel()
+          label.text = "환율 계산기"
+          label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
+          label.translatesAutoresizingMaskIntoConstraints = false
+          label.textColor = .label
+          return label
+          }()
      
      private let baseCurrencyTitleTextField: UITextField = {
-          let testField = UITextField()
-          testField.text = "글씨를 클릭하여 국가를 선택 해주세요"
-          testField.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-          testField.textAlignment = .left
-          testField.translatesAutoresizingMaskIntoConstraints = false
-          testField.textColor = .systemBlue
-          return testField
+          let textField = UITextField()
+          textField.text = "글씨를 클릭하여 국가를 선택 해주세요"
+          textField.font = UIFont.systemFont(ofSize: 20)
+          textField.textAlignment = .left
+          textField.translatesAutoresizingMaskIntoConstraints = false
+          textField.textColor = .systemBlue
+          
+          return textField
      }()
      
      private var baseCurrencyTextField:UITextField = {
@@ -44,7 +53,7 @@ class CurrencyConverterViewController: UIViewController {
      private let quoteCurrencyLabel: UILabel = {
           let label = UILabel()
           label.text = "대한민국"
-          label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+          label.font = UIFont.systemFont(ofSize: 20)
           label.textAlignment = .left
           label.translatesAutoresizingMaskIntoConstraints = false
           return label
@@ -149,6 +158,7 @@ class CurrencyConverterViewController: UIViewController {
      // 레이아웃 처리
      func setup() {
           baseCurrencyTitleTextField.tintColor = UIColor.clear
+          view.addSubview(titleLebel)
           view.addSubview(baseCurrencyTitleTextField)
           view.addSubview(baseCurrencyTextField)
           view.addSubview(imageView)
@@ -160,13 +170,18 @@ class CurrencyConverterViewController: UIViewController {
           quoteCurrencyTextLabel.sizeToFit()
           NSLayoutConstraint.activate([
                
+               titleLebel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 18),
+               titleLebel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+               
                // baseCurrencyLabel
-               baseCurrencyTitleTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
-               baseCurrencyTitleTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
+               baseCurrencyTitleTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
+               baseCurrencyTitleTextField.topAnchor.constraint(equalTo: titleLebel.bottomAnchor, constant: 40),
                
                // baseCurrencyTextFile
-               baseCurrencyTextField.topAnchor.constraint(equalTo: baseCurrencyTitleTextField.bottomAnchor, constant: 20),
+               baseCurrencyTextField.topAnchor.constraint(equalTo: baseCurrencyTitleTextField.bottomAnchor, constant: 30),
                baseCurrencyTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant:  -20),
+               baseCurrencyTextField.leadingAnchor.constraint(equalTo: baseCurrencyTitleTextField.leadingAnchor),
+               
                
                // imageView
                imageView.topAnchor.constraint(equalTo: baseCurrencyTextField.bottomAnchor, constant:  20),
@@ -181,7 +196,7 @@ class CurrencyConverterViewController: UIViewController {
                quoteCurrencyTextLabel.trailingAnchor.constraint(equalTo: baseCurrencyTextField.trailingAnchor),
                
                
-               countdownLabel.topAnchor.constraint(equalTo: quoteCurrencyTextLabel.bottomAnchor, constant:  30),
+               countdownLabel.topAnchor.constraint(equalTo: quoteCurrencyTextLabel.bottomAnchor, constant:  50),
                countdownLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
                
                
