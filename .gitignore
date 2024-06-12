@@ -3,6 +3,7 @@
 
 # Exceptional files
 ExchangeInspector/NaverClient.swift
+API_KEY.plist
 
 ### Git ###
 # Created by git for backups. To disable backups in Git:
