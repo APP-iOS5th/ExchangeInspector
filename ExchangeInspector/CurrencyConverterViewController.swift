@@ -2,7 +2,7 @@
 //  CurrencyConverterViewController.swift
 //  ExchangeInspector
 //
-//  Created by 어재선 on 6/3/24.
+//  Created by Yachae on 6/10/24.
 //
 
 import UIKit
