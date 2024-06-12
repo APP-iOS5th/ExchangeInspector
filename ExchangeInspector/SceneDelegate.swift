@@ -31,19 +31,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         firstViewController.tabBarItem = UITabBarItem(title: "환율 리스트", image: UIImage(systemName: "arrow.up.right"), tag: 0)
         
         // 두번째 탭(환율 계산기)
-        let secondViewController = UIViewController()
+        let secondViewController = CurrencyConverterViewController()
         secondViewController.view.backgroundColor = .white
         secondViewController.tabBarItem = UITabBarItem(title: "환율 계산기", image: UIImage(systemName: "arrow.left.arrow.right"), tag: 1)
         
         // 세번째 탭(뉴스)
         let thirdViewController = NewsListViewController()
         thirdViewController.view.backgroundColor = .white
-        thirdViewController.tabBarItem = UITabBarItem(title: "뉴스", image: UIImage(systemName: "newspaper"), tag: 2)
+        let thirdNavigationController = UINavigationController(rootViewController: thirdViewController)
+        thirdNavigationController.tabBarItem = UITabBarItem(title: "뉴스", image: UIImage(systemName: "newspaper"), tag: 2)
         
         tabBarController.viewControllers = [
             firstViewController,
             secondViewController,
-            thirdViewController
+            thirdNavigationController
         ]
         
         return tabBarController

@@ -3,7 +3,7 @@
 //  ExchangeInspector
 //
 //  Created by 황승혜 on 6/3/24.
-//  Naver Api 연결
+//  Naver Api 연결 및 에러 출력
 
 import Foundation
 import UIKit
@@ -12,11 +12,11 @@ class NaverNewsApi {
     static var shared = NaverNewsApi()
     let jsonDecoder: JSONDecoder = JSONDecoder()
     
-    func requestNews(queryValue: String, completion: @escaping ([Item]?) -> Void) {
+    func requestNews(queryValue: String, display: Int, completion: @escaping ([Item]?) -> Void) {
         let clientID: String = NaverClient().naverClientID
         let clientKey: String = NaverClient().naverClientSecret
         
-        let query: String = "https://openapi.naver.com/v1/search/news.json?query=\(queryValue)"
+        let query: String = "https://openapi.naver.com/v1/search/news.json?query=\(queryValue)&display=\(display)"
         let encodedQuery: String = query.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!
         let queryURL: URL = URL(string: encodedQuery)!
         

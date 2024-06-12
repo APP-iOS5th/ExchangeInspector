@@ -9,11 +9,11 @@ import UIKit
 
 // MARK: - DataModel
 struct ExchangeRate: Codable {
-	let result: Int?
-	let currencyCode: String? // 통화코드
-	let currencyName: String? // 통화이름
-	let rate: String?
-	var changePercentage: String?
+	let result: Int?  // API 결과 코드
+	let currencyCode: String?  // 통화코드
+	let currencyName: String?  // 통화이름
+	let rate: String?  // 환율
+	var changePercentage: String?  // 변동 퍼센트
 
 	enum CodingKeys: String, CodingKey {
 		case result = "result"
@@ -62,7 +62,7 @@ class ExchangeRateAPIService {
 				let jsonString = String(data: data, encoding: .utf8)
 				print("Response JSON: \(jsonString ?? "No data")")
 				
-				// Check if the response is an empty array
+				// 응답이 빈 배열인지 확인
 				if jsonString == "[]" {
 					print("API response is an empty array")
 					completion(.success([]))
@@ -81,144 +81,16 @@ class ExchangeRateAPIService {
 	}
 }
 
-// MARK: - Exchange Rate Service
-class ExchangeRateService {
-	private let apiService = ExchangeRateAPIService()
-
-	func fetchExchangeRates(apiKey: String, completion: @escaping ([ExchangeRate], [ExchangeRate]) -> Void) {
-		let today = getDate(daysAgo: 0)
-		let yesterday = getLastBusinessDay()
-
-		print("Fetching exchange rates for today: \(today) and yesterday: \(yesterday)")
-
-		var todayRates: [ExchangeRate] = []
-		var yesterdayRates: [ExchangeRate] = []
-
-		let group = DispatchGroup()
-
-		group.enter()
-		apiService.getExchangeRates(for: today, apiKey: apiKey) { result in
-			switch result {
-			case .success(let rates):
-				print("Successfully fetched today's rates")
-				todayRates = rates
-			case .failure(let error):
-				print("Failed to fetch today's rates: \(error)")
-			}
-			group.leave()
-		}
-
-		group.enter()
-		fetchLastValidRates(for: yesterday, apiKey: apiKey) { result in
-			switch result {
-			case .success(let rates):
-				print("Successfully fetched yesterday's rates")
-				yesterdayRates = rates
-			case .failure(let error):
-				print("Failed to fetch yesterday's rates: \(error)")
-			}
-			group.leave()
-		}
-
-		group.notify(queue: .main) {
-			print("Today rates count: \(todayRates.count), Yesterday rates count: \(yesterdayRates.count)")
-			// 오늘 데이터가 없으면 어제 데이터를 오늘 데이터로 사용
-			if todayRates.isEmpty, !yesterdayRates.isEmpty {
-				todayRates = yesterdayRates
-			}
-			completion(todayRates, yesterdayRates)
-		}
-	}
-
-	private func getDate(daysAgo: Int) -> String {
-		let koreanTimeZone = TimeZone(identifier: "Asia/Seoul")!
-		let dateFormatter = DateFormatter()
-		dateFormatter.timeZone = koreanTimeZone
-		dateFormatter.dateFormat = "yyyyMMdd"
-		let date = Calendar.current.date(byAdding: .day, value: -daysAgo, to: Date())!
-		return dateFormatter.string(from: date)
-	}
-	
-	private func getLastBusinessDay() -> String {
-		var date = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
-		let calendar = Calendar(identifier: .gregorian)
-		while isWeekend(date: date) {
-			date = calendar.date(byAdding: .day, value: -1, to: date)!
-		}
-		return getDate(from: date)
-	}
-
-	private func isWeekend(date: Date) -> Bool {
-		let calendar = Calendar(identifier: .gregorian)
-		let components = calendar.dateComponents([.weekday], from: date)
-		if let weekday = components.weekday {
-			return weekday == 7 || weekday == 1 // Saturday or Sunday
-		}
-		return false
-	}
-
-	private func getDate(from date: Date) -> String {
-		let koreanTimeZone = TimeZone(identifier: "Asia/Seoul")!
-		let dateFormatter = DateFormatter()
-		dateFormatter.timeZone = koreanTimeZone
-		dateFormatter.dateFormat = "yyyyMMdd"
-		return dateFormatter.string(from: date)
-	}
-
-	private func fetchLastValidRates(for date: String, apiKey: String, completion: @escaping (Result<[ExchangeRate], Error>) -> Void) {
-		var currentDate = date
-		
-		func attemptFetch() {
-			apiService.getExchangeRates(for: currentDate, apiKey: apiKey) { result in
-				switch result {
-				case .success(let rates):
-					if rates.isEmpty {
-						print("No rates found for date: \(currentDate), trying previous day.")
-						if let previousDate = self.getPreviousDate(from: currentDate) {
-							currentDate = previousDate
-							attemptFetch()
-						} else {
-							completion(.failure(NSError(domain: "NoValidRates", code: -1, userInfo: nil)))
-						}
-					} else {
-						completion(.success(rates))
-					}
-				case .failure(let error):
-					print("Failed to fetch rates for date: \(currentDate), error: \(error)")
-					if let previousDate = self.getPreviousDate(from: currentDate) {
-						currentDate = previousDate
-						attemptFetch()
-					} else {
-						completion(.failure(error))
-					}
-				}
-			}
-		}
-		
-		attemptFetch()
-	}
-
-	private func getPreviousDate(from dateString: String) -> String? {
-		let dateFormatter = DateFormatter()
-		dateFormatter.dateFormat = "yyyyMMdd"
-		if let date = dateFormatter.date(from: dateString) {
-			let previousDate = Calendar.current.date(byAdding: .day, value: -1, to: date)!
-			return dateFormatter.string(from: previousDate)
-		}
-		return nil
-	}
-}
-
 // MARK: - ViewController
 class ListView: UIViewController {
-	var exchangeRates: [ExchangeRate] = []
-	let exchangeRateService = ExchangeRateService()
-	let preferredCurrencies = ["USD", "CNH", "JPY(100)", "GBP", "EUR", "HKD"]
-	var countdownTimer: Timer?
-	var countdownLabel: UILabel!
-	var timeRemaining: Int = 300 // 5분
-	
-	let exchangeRateView = UIStackView()
+	var exchangeRates: [ExchangeRate] = []  // 환율 데이터 배열
+	let exchangeRateService = ExchangeRateService()  // 환율 서비스 인스턴스
+	let preferredCurrencies = ["USD", "CNH", "JPY(100)", "GBP", "EUR", "HKD"]  // 선호하는 통화 목록
+	var countdownTimer: Timer?  // 카운트다운 타이머
+	var countdownLabel: UILabel!  // 카운트다운을 표시하는 레이블
+	var timeRemaining: Int = 300  // 남은 시간 (5분)
+
+	let exchangeRateView = UIStackView()  // 환율 데이터를 표시하는 스택뷰
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -283,6 +155,7 @@ class ListView: UIViewController {
 		startCountdownTimer()
 	}
 
+	// API 키를 로드하고 데이터를 업데이트함
 	func updateData() {
 		guard let apiKey = loadAPIKey() else {
 			print("API Key not found")
@@ -301,6 +174,7 @@ class ListView: UIViewController {
 	}
 
 	// MARK: - API Key Loading
+	// API 키 로드하는 함수
 	func loadAPIKey() -> String? {
 		guard let filePath = Bundle.main.path(forResource: "API_KEY", ofType: "plist") else {
 			print("Couldn't find file 'API_KEY.plist'.")
@@ -317,6 +191,7 @@ class ListView: UIViewController {
 	}
 
 	// MARK: - Rate Comparison
+	// 오늘과 어제의 환율 데이터를 비교하여 변동 퍼센트를 계산함
 	func compareRates(todayRates: [ExchangeRate], yesterdayRates: [ExchangeRate]) -> [ExchangeRate] {
 		var updatedRates: [ExchangeRate] = []
 
@@ -352,7 +227,7 @@ class ListView: UIViewController {
 			}
 		}
 
-		// preferredCurrencies 배열의 순서대로 정렬
+		// preferredCurrencies 배열의 순서대로 정렬함
 		updatedRates.sort { preferredCurrencies.firstIndex(of: $0.currencyCode ?? "") ?? Int.max < preferredCurrencies.firstIndex(of: $1.currencyCode ?? "") ?? Int.max }
 
 		print("Updated rates count: \(updatedRates.count)")
@@ -363,12 +238,14 @@ class ListView: UIViewController {
 		return updatedRates
 	}
 
+	// 변동 퍼센트를 계산함
 	func calculateChangePercentage(todayRate: Double, yesterdayRate: Double) -> String {
 		let change = ((todayRate - yesterdayRate) / yesterdayRate) * 100
 		return String(format: "%.2f", change) + "%"
 	}
 
 	// MARK: - Exchange Rate View Update
+	// 환율 데이터를 뷰에 업데이트함
 	func updateExchangeRateView() {
 		exchangeRateView.arrangedSubviews.forEach { $0.removeFromSuperview() }
 
@@ -419,10 +296,16 @@ class ListView: UIViewController {
 		}
 	}
 
+	// 버튼을 눌렀을 때 시트로 환율 계산기 표시
 	@objc func buttonTapped(_ sender: UIButton) {
-		let sheetViewController = UIViewController()
+		guard let buttonIndex = exchangeRateView.arrangedSubviews.firstIndex(of: sender) else {
+			return
+		}
+		let selectedExchangeRate = exchangeRates[buttonIndex]
+		
+		let sheetViewController = CurrencyConverterViewController()
+		sheetViewController.selectedExchangeRate = selectedExchangeRate
 		sheetViewController.view.backgroundColor = .systemBackground
-		sheetViewController.title = "환율 정보"
 
 		if let sheetController = sheetViewController.sheetPresentationController {
 			sheetController.detents = [.large()]
@@ -433,11 +316,13 @@ class ListView: UIViewController {
 	}
 
 	// MARK: - Countdown Timer
+	// 카운트다운 타이머 시작
 	func startCountdownTimer() {
 		countdownTimer?.invalidate()
 		countdownTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateCountdown), userInfo: nil, repeats: true)
 	}
 
+	// 카운트다운 업데이트
 	@objc func updateCountdown() {
 		if timeRemaining > 0 {
 			timeRemaining -= 1
@@ -450,6 +335,7 @@ class ListView: UIViewController {
 		}
 	}
 
+	// 카운트다운 초기화
 	func resetCountdown() {
 		timeRemaining = 300
 	}
