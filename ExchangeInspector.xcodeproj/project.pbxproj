@@ -27,7 +27,7 @@
 		BF4BB1F02C1927000032ED3B /* NaverClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NaverClient.swift; path = ../../NaverClient.swift; sourceTree = "<group>"; };
 		BF4BB1F12C1927000032ED3B /* API_KEY.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = API_KEY.plist; path = ../../API_KEY.plist; sourceTree = "<group>"; };
 		BF8D05A22C104A2B00D1A60D /* ListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
-		BFDAE1352C16DBFC0096EF2C /* CurrencyConverterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyConverterViewController.swift; sourceTree = "<group>"; };
+		BFDAE1352C16DBFC0096EF2C /* CurrencyConverterViewController.swift */ = {isa = PBXFileReference; indentWidth = 5; lastKnownFileType = sourcecode.swift; path = CurrencyConverterViewController.swift; sourceTree = "<group>"; };
 		BFDAE1372C16DEB80096EF2C /* ExchangeRateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateService.swift; sourceTree = "<group>"; };
 		EB61BD492C0ED92400D5324C /* NewsCustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCustomTableViewCell.swift; sourceTree = "<group>"; };
 		EB86295B2C16A0160005C6BE /* CountryNewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryNewsViewController.swift; sourceTree = "<group>"; };
