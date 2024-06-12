@@ -162,7 +162,7 @@ class ListView: UIViewController {
 			return
 		}
 		print("Loaded API Key: \(apiKey)")
-		
+
 		exchangeRateService.fetchExchangeRates(apiKey: apiKey) { [weak self] todayRates, yesterdayRates in
 			guard let self = self else { return }
 			self.exchangeRates = self.compareRates(todayRates: todayRates, yesterdayRates: yesterdayRates)
@@ -279,7 +279,7 @@ class ListView: UIViewController {
 
 			let changeSign = rate.changePercentage?.starts(with: "-") ?? false ? "▼" : "▲"
 			let changeColor = rate.changePercentage?.starts(with: "-") ?? false ? UIColor.systemBlue : UIColor.systemRed
-			let changePercentageString = "\(rate.changePercentage ?? "N/A")%"
+			let changePercentageString = "\(rate.changePercentage ?? "N/A")"
 
 			let changeValueAttributes: [NSAttributedString.Key: Any] = [
 				.font: UIFont.systemFont(ofSize: 14, weight: .regular),
