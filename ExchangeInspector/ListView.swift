@@ -82,8 +82,6 @@ class ExchangeRateAPIService {
 }
 
 // MARK: - ViewController
-import UIKit
-
 class ListView: UIViewController {
 	var exchangeRates: [ExchangeRate] = []  // 환율 데이터 배열
 	let exchangeRateService = ExchangeRateService()  // 환율 서비스 인스턴스
@@ -205,7 +203,6 @@ class ListView: UIViewController {
 	}
 	
 	// MARK: - API Key Loading
-	// API 키 로드하는 함수
 	func loadAPIKey() -> String? {
 		guard let filePath = Bundle.main.path(forResource: "API_KEY", ofType: "plist") else {
 			print("Couldn't find file 'API_KEY.plist'.")
@@ -222,7 +219,6 @@ class ListView: UIViewController {
 	}
 	
 	// MARK: - Rate Comparison
-	// 오늘과 어제의 환율 데이터를 비교하여 변동 퍼센트를 계산함
 	func compareRates(todayRates: [ExchangeRate], yesterdayRates: [ExchangeRate]) -> [ExchangeRate] {
 		var updatedRates: [ExchangeRate] = []
 		
@@ -273,14 +269,12 @@ class ListView: UIViewController {
 		return updatedRates
 	}
 	
-	// 변동 퍼센트를 계산함
 	func calculateChangePercentage(todayRate: Double, yesterdayRate: Double) -> String {
 		let change = ((todayRate - yesterdayRate) / yesterdayRate) * 100
 		return String(format: "%.2f", change) + "%"
 	}
 	
 	// MARK: - Exchange Rate View Update
-	// 환율 데이터를 뷰에 업데이트함
 	func updateExchangeRateView() {
 		exchangeRateView.arrangedSubviews.forEach { $0.removeFromSuperview() }
 		
@@ -325,6 +319,15 @@ class ListView: UIViewController {
 			
 			button.setAttributedTitle(attributedTitle, for: .normal)
 			
+			let chevron = UIImageView(image: UIImage(systemName: "chevron.right"))
+			chevron.translatesAutoresizingMaskIntoConstraints = false
+			button.addSubview(chevron)
+			
+			NSLayoutConstraint.activate([
+				chevron.trailingAnchor.constraint(equalTo: button.trailingAnchor, constant: -20),
+				chevron.centerYAnchor.constraint(equalTo: button.centerYAnchor)
+			])
+			
 			exchangeRateView.addArrangedSubview(button)
 			
 			button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
@@ -351,13 +354,11 @@ class ListView: UIViewController {
 	}
 	
 	// MARK: - Countdown Timer
-	// 카운트다운 타이머 시작
 	func startCountdownTimer() {
 		countdownTimer?.invalidate()
 		countdownTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateCountdown), userInfo: nil, repeats: true)
 	}
 	
-	// 카운트다운 업데이트
 	@objc func updateCountdown() {
 		if timeRemaining > 0 {
 			timeRemaining -= 1
@@ -370,9 +371,7 @@ class ListView: UIViewController {
 		}
 	}
 	
-	// 카운트다운 초기화
 	func resetCountdown() {
 		timeRemaining = 300
 	}
 }
-
