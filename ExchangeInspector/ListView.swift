@@ -98,7 +98,7 @@ class ListView: UIViewController {
 
 		let titleLabel = UILabel()
 		titleLabel.text = "오늘의 환율"
-        titleLabel.font = UIFont.systemFont(ofSize: 30, weight: .bold)
+		titleLabel.font = UIFont.systemFont(ofSize: 30, weight: .bold)
 		titleLabel.translatesAutoresizingMaskIntoConstraints = false
 		titleLabel.textColor = .label
 
@@ -165,13 +165,25 @@ class ListView: UIViewController {
 
 		exchangeRateService.fetchExchangeRates(apiKey: apiKey) { [weak self] todayRates, yesterdayRates in
 			guard let self = self else { return }
-			self.exchangeRates = self.compareRates(todayRates: todayRates, yesterdayRates: yesterdayRates)
+			let currentTime = Calendar.current.dateComponents([.hour], from: Date()).hour ?? 0
+			if todayRates.isEmpty || currentTime < 11 {
+				print("오늘의 환율 데이터가 비어 있거나 현재 시간이 오전 11시 이전이므로 어제의 데이터를 사용합니다")
+				self.exchangeRates = yesterdayRates.filter { self.preferredCurrencies.contains($0.currencyCode ?? "") }
+			} else {
+				self.exchangeRates = self.compareRates(todayRates: todayRates, yesterdayRates: yesterdayRates)
+			}
+			self.exchangeRates.sort {
+				let index1 = self.preferredCurrencies.firstIndex(of: $0.currencyCode ?? "") ?? Int.max
+				let index2 = self.preferredCurrencies.firstIndex(of: $1.currencyCode ?? "") ?? Int.max
+				return index1 < index2
+			}
 			DispatchQueue.main.async {
 				self.updateExchangeRateView()
 				self.resetCountdown()
 			}
 		}
 	}
+
 
 	// MARK: - API Key Loading
 	// API 키 로드하는 함수
@@ -228,7 +240,11 @@ class ListView: UIViewController {
 		}
 
 		// preferredCurrencies 배열의 순서대로 정렬함
-		updatedRates.sort { preferredCurrencies.firstIndex(of: $0.currencyCode ?? "") ?? Int.max < preferredCurrencies.firstIndex(of: $1.currencyCode ?? "") ?? Int.max }
+		updatedRates.sort {
+			let index1 = preferredCurrencies.firstIndex(of: $0.currencyCode ?? "") ?? Int.max
+			let index2 = preferredCurrencies.firstIndex(of: $1.currencyCode ?? "") ?? Int.max
+			return index1 < index2
+		}
 
 		print("Updated rates count: \(updatedRates.count)")
 		for rate in updatedRates {
