@@ -202,21 +202,6 @@ class CurrencyConverterViewController: UIViewController {
                
           ])
           
-          // 완료 버튼을 추가합니다.
-          let toolbar = UIToolbar()
-          toolbar.sizeToFit()
-          
-          let doneButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(doneButtonTapped))
-          let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-          toolbar.items = [flexibleSpace, doneButton]
-          
-          baseCurrencyTextField.inputAccessoryView = toolbar
-          
-          
-     }
-     // 완료 버튼이 눌렸을 때 호출되는 메서드
-     @objc func doneButtonTapped() {
-          view.endEditing(true)
      }
      
      //텍스트 입력했을때 처리
